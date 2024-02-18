@@ -9,15 +9,17 @@ public class Person implements Serializable {
     private String lastName;
     private String cpf;
     private String rg;
+    private Address address;
 
     public Person() {}
 
-    public Person(Integer id, String firstName, String lastName, String cpf, String rg) {
+    public Person(Integer id, String firstName, String lastName, String cpf, String rg, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cpf = cpf;
         this.rg = rg;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -58,6 +60,14 @@ public class Person implements Serializable {
 
     public void setRg(String rg) {
         this.rg = rg;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
