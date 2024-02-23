@@ -1,11 +1,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Publisher implements Serializable {
     private int id;
     private String name;
+
+    private List<Book> books = new ArrayList<>();
 
     public Publisher() {}
 
@@ -28,6 +32,16 @@ public class Publisher implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooks() { return books; }
+
+    public void addBooks(List<Book> list) {
+        for (Book b : list) {
+            if (b.getPublisher().equals(this)) {
+                books.add(b);
+            }
+        }
     }
 
     @Override

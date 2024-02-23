@@ -5,25 +5,35 @@ import entities.*;
 import entities.enums.States;
 
 import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class Program {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Connection conn = DB.getConection();
 
         Address ad1 = new Address(1, "Rua 2", 32, "Casa", null, "Rio de Janeiro", States.RJ);
-        System.out.println(ad1);
 
         Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", ad1);
-        System.out.println(c1);
-
         Author a1 = new Author(1, "Bram Stoker");
-        System.out.println(a1.getName());
-
-        System.out.println(c1.getName());
-
         Publisher p1 = new Publisher(1, "Darkside");
+        Book b1 = new Book(1, "Dracula", sdf.parse("1897-05-26"), "hard cover", p1);
+        Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "hard cover", null);
+        Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
 
-        System.out.println(p1);
+
+        b1.addAuthor(List.of(a1));
+        a1.addBooks(List.of(b1, b2));
+        p1.addBooks(List.of(b1, b3));
+
+        System.out.println(b1.getAuthors());
+        System.out.println(a1.getBooks());
+        System.out.println("Esta é lista de publicados " + p1.getBooks());
 
         DB.closeConnection();
     }
