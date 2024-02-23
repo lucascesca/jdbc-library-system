@@ -11,8 +11,10 @@ public class Book implements Serializable {
     private String title;
     private Date publishing_year;
     private String edition;
+
     private Publisher publisher;
     private List<Author> authors = new ArrayList<>();
+    private List<BookCopy> copies = new ArrayList<>();
 
     public Book() {}
 
@@ -66,8 +68,15 @@ public class Book implements Serializable {
 
     public List<Author> getAuthors() { return authors; }
 
+    public List<BookCopy> getCopies() { return copies; }
+
     public void addAuthor(List<Author> list) {
         authors.addAll(list);
+    }
+
+    public void createCopies() {
+        BookCopy copy = new BookCopy(copies.size() + 1, id);
+        copies.add(copy);
     }
 
     @Override

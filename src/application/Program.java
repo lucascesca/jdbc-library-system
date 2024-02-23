@@ -26,14 +26,17 @@ public class Program {
         Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "hard cover", null);
         Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
 
-
         b1.addAuthor(List.of(a1));
         a1.addBooks(List.of(b1, b2));
         p1.addBooks(List.of(b1, b3));
+        for (int i = 0; i < 5; i++) {
+            b1.createCopies();
+        }
 
         System.out.println(b1.getAuthors());
         System.out.println(a1.getBooks());
         System.out.println("Esta é lista de publicados " + p1.getBooks());
+        System.out.println(b1.getCopies());
 
         DB.closeConnection();
     }
