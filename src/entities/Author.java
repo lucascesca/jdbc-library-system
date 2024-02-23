@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Author extends Person {
+public class Author extends Person implements Serializable {
     private int id;
 
     public Author() {}
