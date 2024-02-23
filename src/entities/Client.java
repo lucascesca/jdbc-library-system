@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Client extends Person implements Serializable {
@@ -8,6 +10,8 @@ public class Client extends Person implements Serializable {
     private String cpf;
     private String rg;
     private Address address;
+
+    private List<Loan> loans = new ArrayList<>();
 
     public Client() {}
 
@@ -49,6 +53,14 @@ public class Client extends Person implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void addClientLoan(Loan loan) {
+        loans.add(loan);
     }
 
     @Override

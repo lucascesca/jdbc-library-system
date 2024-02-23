@@ -1,11 +1,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BookCopy implements Serializable {
     private int copyId;
     private int bookId;
+
+    private List<Loan> loans = new ArrayList<>();
 
     public BookCopy() {}
 
@@ -28,6 +32,14 @@ public class BookCopy implements Serializable {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void addLoan(Loan loan) {
+        loans.add(loan);
     }
 
     @Override

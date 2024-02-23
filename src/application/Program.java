@@ -7,8 +7,6 @@ import entities.enums.States;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +30,18 @@ public class Program {
         for (int i = 0; i < 5; i++) {
             b1.createCopies();
         }
+        Loan l1 = new Loan(1, new Date(), new Date(), b1.getCopies().get(0), c1);
+
+        c1.addClientLoan(l1);
+        b1.getCopies().get(0).addLoan(l1);
 
         System.out.println(b1.getAuthors());
         System.out.println(a1.getBooks());
         System.out.println("Esta é lista de publicados " + p1.getBooks());
         System.out.println(b1.getCopies());
+        System.out.println(l1);
+        System.out.println("Livros empresitmos " + b1.getCopies().get(0).getLoans());
+        System.out.println(c1.getLoans());
 
         DB.closeConnection();
     }
