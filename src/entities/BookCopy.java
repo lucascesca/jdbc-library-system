@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BookCopy implements Serializable {
+public class BookCopy extends Book implements Serializable {
     private int copyId;
     private int bookId;
+    private Book book;
 
     private List<Loan> loans = new ArrayList<>();
 
     public BookCopy() {}
 
-    public BookCopy(Integer id, Integer bookId) {
+    public BookCopy(Integer id, Book book) {
         this.copyId = id;
-        this.bookId = bookId;
+        this.book = book;
+        this.bookId = this.book.getId();
     }
 
     public int getCopyId() {
@@ -59,6 +61,7 @@ public class BookCopy implements Serializable {
         return "BookCopy{" +
                 "id=" + copyId +
                 ", bookId=" + bookId +
+                ", book=" + book +
                 '}';
     }
 }

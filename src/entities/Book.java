@@ -75,7 +75,7 @@ public class Book implements Serializable {
     }
 
     public void createCopies() {
-        BookCopy copy = new BookCopy(copies.size() + 1, id);
+        BookCopy copy = new BookCopy(copies.size() + 1, this);
         copies.add(copy);
     }
 
