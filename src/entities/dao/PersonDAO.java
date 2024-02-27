@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface PersonDAO extends DAO<Person> {
     List<? extends Person> findByName(String name);
-    Person findByLoan(Loan loan);
     Person findByBook(Book book);
 }

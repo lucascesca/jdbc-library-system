@@ -14,15 +14,19 @@ public class Address implements Serializable {
     private String city;
     private States uf;
 
+    private Integer clientId;
+
     public Address() {}
 
-    public Address(Integer id, String street, Integer number, String type, String complement, String city, States uf) {
+    public Address(Integer id, String street, Integer number, String type, String complement, String city, States uf, Integer clientId) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.type = type;
         this.complement = complement;
         this.city = city;
         this.uf = uf;
+        this.clientId = clientId;
     }
 
     public Integer getId() {
@@ -80,6 +84,10 @@ public class Address implements Serializable {
     public void setUf(States uf) {
         this.uf = uf;
     }
+
+    public Integer getClientId() { return clientId; }
+
+    public void setClientId(Integer clientId) { this.clientId = clientId; }
 
     @Override
     public boolean equals(Object o) {

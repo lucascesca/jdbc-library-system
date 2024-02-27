@@ -1,24 +1,49 @@
 package application;
 
-import db.DB;
 import entities.*;
+import entities.dao.AddressDAO;
+import entities.dao.PersonDAO;
+import entities.dao.DaoFactory;
 import entities.enums.States;
 
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class Program {
     public static void main(String[] args) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Connection conn = DB.getConection();
+        PersonDAO clientDao = DaoFactory.createClientDaoJDBC();
+        AddressDAO addressDao = DaoFactory.createAddressDaoJDBC();
 
-        Address ad1 = new Address(1, "Rua 2", 32, "Casa", null, "Rio de Janeiro", States.RJ);
+        Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", null);
+        Address ad1 = new Address(1, "Rua 2", 35, "Casa", null, "Rio de Janeiro", States.RJ, c1.getId());
+        c1.setAddress(ad1);
 
-        Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", ad1);
-        Author a1 = new Author(1, "Bram Stoker");
+        // Address needs to be deleted first to avoid violation of the restriction.
+        //addressDao.deleteById(ad1.getId());
+        //clientDao.deleteById(c1.getId());
+        //clientDao.insert(c1);
+        //clientDao.update(c1);
+        Client client = (Client) clientDao.findById(1);
+        Address address = addressDao.findById(1);
+
+        //addressDao.insert(ad1);
+        //addressDao.update(ad1);
+        System.out.println(client);
+        System.out.println(client.getAddress());
+        System.out.println();
+        System.out.println(address);
+
+        List<Address> addresses =  ((List<Address>) addressDao.findAll());
+        System.out.println("Lista");
+
+        List<Client> clients = (List<Client>) clientDao.findAll();
+
+        addresses.forEach(System.out::println);
+        clients.forEach(System.out::println);
+
+        /*Author a1 = new Author(1, "Bram Stoker");
         Publisher p1 = new Publisher(1, "Darkside");
         Book b1 = new Book(1, "Dracula", sdf.parse("1897-05-26"), "hard cover", p1);
         Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "hard cover", null);
@@ -41,8 +66,8 @@ public class Program {
         System.out.println(b1.getCopies().get(0));
         System.out.println(l1);
         System.out.println("Livros empresitmos " + b1.getCopies().get(0).getLoans());
-        System.out.println(c1.getLoans());
+        System.out.println(c1.getLoans());*/
 
-        DB.closeConnection();
+
     }
 }
