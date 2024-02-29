@@ -168,8 +168,7 @@ public class ClientDaoJDBC implements PersonDAO {
             List<Client> list = new ArrayList<>();
 
             while (rs.next()) {
-                Client obj = instantiateClient(rs);
-                list.add(obj);
+                list.add(instantiateClient(rs));
             }
 
             return list;
@@ -185,7 +184,36 @@ public class ClientDaoJDBC implements PersonDAO {
 
     @Override
     public List<Client> findByName(String name) {
-        return null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "SELECT C.CODE AS client_id, C.CPF, C.RG, C.CLIENT_NAME, " +
+                            "A.CODE AS address_id, A.NUMBER, A.ADD_TYPE, A.COMPLEMENT, A.CITY, A.UF, A.STREET " +
+                            "FROM CLIENT C " +
+                            "JOIN ADDRESS A ON (C.CODE=A.PERSON_CODE) " +
+                            "WHERE LOWER(client_name) LIKE LOWER(?);"
+            );
+
+            pstmt.setString(1, "%" + name + "%");
+            rs = pstmt.executeQuery();
+
+            List<Client> list = new ArrayList<>();
+
+            while (rs.next()) {
+                list.add(instantiateClient(rs));
+            }
+
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(pstmt);
+        }
     }
 
     public Client findByLoan(Loan loan) {
