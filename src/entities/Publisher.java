@@ -36,12 +36,8 @@ public class Publisher implements Serializable {
 
     public List<Book> getBooks() { return books; }
 
-    public void addBooks(List<Book> list) {
-        for (Book b : list) {
-            if (b.getPublisher().equals(this)) {
-                books.add(b);
-            }
-        }
+    public void addBook(Book book) {
+        books.add(book);
     }
 
     @Override

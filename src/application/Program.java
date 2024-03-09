@@ -1,13 +1,13 @@
 package application;
 
 import entities.*;
-import entities.dao.AddressDAO;
-import entities.dao.PersonDAO;
-import entities.dao.DaoFactory;
+import entities.dao.*;
 import entities.enums.States;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Program {
@@ -15,6 +15,8 @@ public class Program {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         PersonDAO clientDao = DaoFactory.createClientDaoJDBC();
         AddressDAO addressDao = DaoFactory.createAddressDaoJDBC();
+        PublisherDAO publisherDao = DaoFactory.createPublisherDaoJDBC();
+        BookDAO bookDao = DaoFactory.createBookDaoJDBC();
 
         Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", null);
         Client c2 = new Client(2, "Marco Cesca", "372.444.160-67", "45.012.682", null);
@@ -22,6 +24,11 @@ public class Program {
         Address ad2 = new Address(2, "Rua do Carmo", 80, "Casa", null, "São Paulo", States.SP, c2.getId());
         c1.setAddress(ad1);
         c2.setAddress(ad2);
+
+        Publisher p1 = new Publisher(1, "Darkside");
+        Book b1 = new Book(1, "Dracula", sdf.parse("1897-05-26"), "hard cover", p1);
+        Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "standard", p1);
+        Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
 
         // Address needs to be deleted first to avoid violation of the restriction.
         //addressDao.deleteById(ad1.getId());
@@ -38,6 +45,14 @@ public class Program {
         System.out.println();
         System.out.println(address);
 
+        //publisherDao.insert(p1);
+        //publisherDao.update(p1);
+        //publisherDao.deleteById(p1.getId());
+
+        //bookDao.insert(b2);
+        //bookDao.update(b2);
+        bookDao.deleteById(2);
+
         List<Address> addresses =  ((List<Address>) addressDao.findAll());
         System.out.println("Lista");
 
@@ -46,11 +61,14 @@ public class Program {
         addresses.forEach(System.out::println);
         clients.forEach(System.out::println);
 
+        Publisher publisher = publisherDao.findById(1);
+
+        publisher.getBooks().forEach(System.out::println);
+
+        System.out.println(publisherDao.findAll());
+
         /*Author a1 = new Author(1, "Bram Stoker");
-        Publisher p1 = new Publisher(1, "Darkside");
-        Book b1 = new Book(1, "Dracula", sdf.parse("1897-05-26"), "hard cover", p1);
-        Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "hard cover", null);
-        Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
+
 
         b1.addAuthor(List.of(a1));
         a1.addBooks(List.of(b1, b2));
@@ -70,7 +88,6 @@ public class Program {
         System.out.println(l1);
         System.out.println("Livros empresitmos " + b1.getCopies().get(0).getLoans());
         System.out.println(c1.getLoans());*/
-
 
     }
 }
