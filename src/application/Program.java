@@ -17,6 +17,7 @@ public class Program {
         AddressDAO addressDao = DaoFactory.createAddressDaoJDBC();
         PublisherDAO publisherDao = DaoFactory.createPublisherDaoJDBC();
         BookDAO bookDao = DaoFactory.createBookDaoJDBC();
+        PersonDAO authorDao = DaoFactory.createAuthorDaoJDBC();
 
         Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", null);
         Client c2 = new Client(2, "Marco Cesca", "372.444.160-67", "45.012.682", null);
@@ -37,6 +38,10 @@ public class Program {
         //clientDao.update(c1);
         Client client = (Client) clientDao.findById(1);
         Address address = addressDao.findById(1);
+
+        Author a1 = new Author(1, "Bram Stoker");
+
+        //authorDao.insert(a1);
 
         //addressDao.insert(ad2);
         //addressDao.update(ad1);
@@ -67,7 +72,7 @@ public class Program {
 
         System.out.println(publisherDao.findAll());
 
-        /*Author a1 = new Author(1, "Bram Stoker");
+        /*
 
 
         b1.addAuthor(List.of(a1));

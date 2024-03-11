@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Client extends Person implements Serializable {
-    private Integer id;
     private String cpf;
     private String rg;
     private Address address;

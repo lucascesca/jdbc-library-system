@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Author extends Person implements Serializable {
-    private int id;
 
     private List<Book> books = new ArrayList<>();
 
