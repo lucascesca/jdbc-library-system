@@ -8,6 +8,7 @@ import entities.Person;
 import entities.dao.PersonDAO;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDaoJDBC implements PersonDAO {
@@ -50,27 +51,140 @@ public class AuthorDaoJDBC implements PersonDAO {
 
     @Override
     public void update(Person obj) {
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "UPDATE author SET author_name = ? WHERE code = ?;",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1, obj.getName());
+            pstmt.setInt(2, obj.getId());
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(pstmt);
+        }
 
     }
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement pstmt = null;
 
+        try {
+            pstmt = conn.prepareStatement(
+                    "DELETE FROM author WHERE code = ?;");
+
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(pstmt);
+        }
     }
 
     @Override
     public Person findById(Integer id) {
-        return null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "SELECT * FROM author WHERE code = ?;");
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+
+            Author obj = new Author();
+
+            if (rs.next()) {
+                instantiateAuthor(rs);
+            }
+            return obj;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(pstmt);
+        }
     }
 
     @Override
     public List<? extends Person> findAll() {
-        return null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "SELECT * FROM author;");
+
+            rs = pstmt.executeQuery();
+
+            List<Author> list = new ArrayList<>();
+
+            while (rs.next()) {
+                list.add(instantiateAuthor(rs));
+            }
+
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(pstmt);
+        }
+    }
+
+    private Author instantiateAuthor(ResultSet rs) throws SQLException {
+        Author obj = new Author();
+
+        obj.setId(rs.getInt("code"));
+        obj.setName(rs.getString("author_name"));
+
+        return obj;
     }
 
     @Override
     public List<? extends Person> findByName(String name) {
-        return null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "SELECT * FROM author WHERE LOWER(author_name) LIKE LOWER(?);");
+
+            pstmt.setString(1, "%" + name + "%");
+
+            rs = pstmt.executeQuery();
+
+            List<Author> list = new ArrayList<>();
+
+            while (rs.next()) {
+                list.add(instantiateAuthor(rs));
+            }
+
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(pstmt);
+        }
     }
 
     @Override

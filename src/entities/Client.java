@@ -22,14 +22,6 @@ public class Client extends Person implements Serializable {
         this.address = address;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getCpf() {
         return cpf;
     }

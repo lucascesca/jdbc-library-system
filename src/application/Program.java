@@ -31,50 +31,24 @@ public class Program {
         Book b2 = new Book(2, "The Lair of the White Worm", new Date(), "standard", p1);
         Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
 
-        // Address needs to be deleted first to avoid violation of the restriction.
-        //addressDao.deleteById(ad1.getId());
-        //clientDao.deleteById(c1.getId());
-        //clientDao.insert(c2);
-        //clientDao.update(c1);
+
         Client client = (Client) clientDao.findById(1);
         Address address = addressDao.findById(1);
 
         Author a1 = new Author(1, "Bram Stoker");
+        Author a2 = new Author(2, "Edgar Allan Poe");
 
         //authorDao.insert(a1);
+        //authorDao.update(a1);
+        //authorDao.deleteById(1);
 
-        //addressDao.insert(ad2);
-        //addressDao.update(ad1);
-        System.out.println(client);
-        System.out.println(client.getAddress());
+        System.out.println(authorDao.findById(1));
         System.out.println();
-        System.out.println(address);
 
-        //publisherDao.insert(p1);
-        //publisherDao.update(p1);
-        //publisherDao.deleteById(p1.getId());
-
-        //bookDao.insert(b2);
-        //bookDao.update(b2);
-        bookDao.deleteById(2);
-
-        List<Address> addresses =  ((List<Address>) addressDao.findAll());
-        System.out.println("Lista");
-
-        List<Client> clients = (List<Client>) clientDao.findByName("Marco");
-
-        addresses.forEach(System.out::println);
-        clients.forEach(System.out::println);
-
-        Publisher publisher = publisherDao.findById(1);
-
-        publisher.getBooks().forEach(System.out::println);
-
-        System.out.println(publisherDao.findAll());
+        System.out.println(authorDao.findAll());
+        System.out.println(authorDao.findByName("Poe"));
 
         /*
-
-
         b1.addAuthor(List.of(a1));
         a1.addBooks(List.of(b1, b2));
         p1.addBooks(List.of(b1, b3));
