@@ -13,4 +13,6 @@ public class DaoFactory {
     public static BookDaoJDBC createBookDaoJDBC() { return new BookDaoJDBC(DB.getConnection()); }
 
     public static AuthorDaoJDBC createAuthorDaoJDBC() { return new AuthorDaoJDBC(DB.getConnection()); }
+
+    public static BookAuthorDaoJDBC createBookAuthorDaoJDBC() { return new BookAuthorDaoJDBC(DB.getConnection()); }
 }

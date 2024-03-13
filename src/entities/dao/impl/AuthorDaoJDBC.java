@@ -35,7 +35,7 @@ public class AuthorDaoJDBC implements PersonDAO {
             if (affectedRows > 0) {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
-                    int id = rs.getInt(1);
+                    int id = rs.getInt("code");
                     obj1.setId(id);
                 }
                 DB.closeResultSet(rs);
