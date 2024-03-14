@@ -40,9 +40,14 @@ public class Program {
         Author a2 = new Author(2, "Edgar Allan Poe");
 
         BookAuthor ba1 = new BookAuthor(b1, a1);
+        BookAuthor ba3 = new BookAuthor(b2, a1);
         BookAuthor ba2 = new BookAuthor(b3, a2);
 
-        //bookAuthorDao.insert(ba2);
+        //bookDao.insert(b2);
+
+        //.insert(ba3);
+        //bookAuthorDao.update(ba1);
+
 
         //authorDao.insert(a1);
         //authorDao.update(a1);
@@ -53,6 +58,9 @@ public class Program {
 
         System.out.println(authorDao.findAll());
         System.out.println(authorDao.findByName("Poe"));
+
+        System.out.println();
+        System.out.println(bookAuthorDao.findBooksByAuthor("Bram Stoker"));
 
         /*
         b1.addAuthor(List.of(a1));
