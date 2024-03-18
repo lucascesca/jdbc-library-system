@@ -72,14 +72,14 @@ public class PublisherDaoJDBC implements PublisherDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void delete(Publisher obj) {
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(
                     "DELETE FROM publisher WHERE code = ?;");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             pstmt.executeUpdate();
         }
@@ -92,14 +92,16 @@ public class PublisherDaoJDBC implements PublisherDAO {
     }
 
     @Override
-    public Publisher findById(Integer id) {
+    public Publisher find(Publisher obj) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             pstmt = conn.prepareStatement(
                     "SELECT P.CODE AS P_CODE, P.PUBLI_NAME, B.CODE AS B_CODE, B.TITLE, B.PUBLISHING_YEAR, B.EDITION FROM PUBLISHER P " +
-                            "JOIN BOOK B ON (P.CODE=B.PUBLISHER_CODE);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                            "JOIN BOOK B ON (?=B.PUBLISHER_CODE);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+            pstmt.setInt(1, obj.getId());
 
             rs = pstmt.executeQuery();
 

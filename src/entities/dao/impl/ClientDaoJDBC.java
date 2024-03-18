@@ -78,13 +78,13 @@ public class ClientDaoJDBC implements PersonDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void delete(Person obj) {
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement("DELETE FROM client WHERE code = ?;");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             pstmt.executeUpdate();
         }
@@ -97,7 +97,7 @@ public class ClientDaoJDBC implements PersonDAO {
     }
 
     @Override
-    public Person findById(Integer id) {
+    public Person find(Person obj) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
@@ -107,7 +107,7 @@ public class ClientDaoJDBC implements PersonDAO {
                             "A.CODE AS address_id, A.NUMBER, A.ADD_TYPE, A.COMPLEMENT, A.CITY, A.UF, A.STREET " +
                             "FROM CLIENT C " +
                             "JOIN ADDRESS A ON (C.CODE=A.PERSON_CODE) WHERE c.code = ?;");
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             rs = pstmt.executeQuery();
 

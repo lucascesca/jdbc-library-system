@@ -83,14 +83,14 @@ public class AddressDaoJDBC implements AddressDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void delete(Address obj) {
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(
                     "DELETE FROM address WHERE code = ?");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             pstmt.executeUpdate();
         }
@@ -103,7 +103,7 @@ public class AddressDaoJDBC implements AddressDAO {
     }
 
     @Override
-    public Address findById(Integer id) {
+    public Address find(Address obj) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
@@ -111,7 +111,7 @@ public class AddressDaoJDBC implements AddressDAO {
             pstmt = conn.prepareStatement(
                     "SELECT * FROM address WHERE code = ?;");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
             rs = pstmt.executeQuery();
 
             if (rs.next()) {

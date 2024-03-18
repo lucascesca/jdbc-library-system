@@ -6,9 +6,7 @@ import entities.enums.States;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class Program {
     public static void main(String[] args) throws ParseException {
@@ -33,8 +31,8 @@ public class Program {
         Book b3 = new Book(3, "Poe's poems", new Date(), "standard", p1);
 
 
-        Client client = (Client) clientDao.findById(1);
-        Address address = addressDao.findById(1);
+        Client client = (Client) clientDao.find(c1);
+        Address address = addressDao.find(ad1);
 
         Author a1 = new Author(1, "Bram Stoker");
         Author a2 = new Author(2, "Edgar Allan Poe");
@@ -43,17 +41,20 @@ public class Program {
         BookAuthor ba3 = new BookAuthor(b2, a1);
         BookAuthor ba2 = new BookAuthor(b3, a2);
 
-        //bookDao.insert(b2);
+        //bookDao.insert(b1);
 
-        //.insert(ba3);
+        //bookAuthorDao.insert(ba1);
         //bookAuthorDao.update(ba1);
+
+        bookAuthorDao.delete(1, b1);
+        bookDao.delete(b1);
 
 
         //authorDao.insert(a1);
         //authorDao.update(a1);
         //authorDao.deleteById(1);
 
-        System.out.println(authorDao.findById(1));
+        System.out.println(authorDao.find(a1));
         System.out.println();
 
         System.out.println(authorDao.findAll());

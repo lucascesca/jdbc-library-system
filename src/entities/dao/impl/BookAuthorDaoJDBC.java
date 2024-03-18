@@ -2,7 +2,6 @@ package entities.dao.impl;
 
 import db.DB;
 import db.DbException;
-import db.DbIntegrityException;
 import entities.Book;
 import entities.BookAuthor;
 import entities.Publisher;
@@ -72,13 +71,25 @@ public class BookAuthorDaoJDBC implements BookAuthorDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        throw new DbIntegrityException("Esta ação viola a restrição de integridade do banco");
-    }
+    public <T> void delete(Integer id, T obj) {
+        PreparedStatement pstmt = null;
 
-    @Override
-    public BookAuthor findById(Integer id) {
-        throw new DbException("Esta ação não é permitida");
+        try {
+            pstmt = obj instanceof Book ?
+                    conn.prepareStatement("DELETE FROM book_author WHERE book_code = ?;") :
+                    conn.prepareStatement("DELETE FROM book_author WHERE author_code = ?;");
+
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(pstmt);
+        }
     }
 
     public List<Book> findBooksByAuthor(String name) {
@@ -123,10 +134,5 @@ public class BookAuthorDaoJDBC implements BookAuthorDAO {
         obj.setPublisher(new Publisher(rs.getInt("p_id"), rs.getString("p_name")));
 
         return obj;
-    }
-
-    @Override
-    public List<? extends BookAuthor> findAll() {
-        return null;
     }
 }

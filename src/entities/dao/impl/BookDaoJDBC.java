@@ -2,6 +2,7 @@ package entities.dao.impl;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import entities.Book;
 import entities.Client;
 import entities.Loan;
@@ -78,19 +79,19 @@ public class BookDaoJDBC implements BookDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void delete(Book obj) {
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(
-                    "DELETE FROM book WHERE code = ?;");
+                    " DELETE FROM book WHERE code = ?;");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             pstmt.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbIntegrityException("Esta ação viola a restrinção de integridade");
         }
         finally {
             DB.closeStatement(pstmt);
@@ -98,7 +99,7 @@ public class BookDaoJDBC implements BookDAO {
     }
 
     @Override
-    public Book findById(Integer id) {
+    public Book find(Book obj) {
         return null;
     }
 

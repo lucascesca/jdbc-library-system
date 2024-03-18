@@ -73,14 +73,14 @@ public class AuthorDaoJDBC implements PersonDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void delete(Person obj) {
         PreparedStatement pstmt = null;
 
         try {
             pstmt = conn.prepareStatement(
                     "DELETE FROM author WHERE code = ?;");
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             pstmt.executeUpdate();
         }
@@ -93,23 +93,21 @@ public class AuthorDaoJDBC implements PersonDAO {
     }
 
     @Override
-    public Person findById(Integer id) {
+    public Person find(Person obj) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             pstmt = conn.prepareStatement(
                     "SELECT * FROM author WHERE code = ?;");
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, obj.getId());
 
             rs = pstmt.executeQuery();
 
-            Author obj = new Author();
-
             if (rs.next()) {
-                instantiateAuthor(rs);
+                return instantiateAuthor(rs);
             }
-            return obj;
+            return null;
         }
         catch (SQLException e) {
             throw new DbException(e.getMessage());

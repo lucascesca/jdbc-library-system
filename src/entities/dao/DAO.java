@@ -5,7 +5,7 @@ import java.util.List;
 public interface DAO<T> {
     void insert(T obj);
     void update(T obj);
-    void deleteById(Integer id);
-    T findById(Integer id);
+    void delete(T obj);
+    T find(T obj);
     List<? extends T> findAll();
 }
