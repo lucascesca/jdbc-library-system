@@ -1,5 +1,6 @@
 package entities.dao;
 
+import entities.Author;
 import entities.Book;
 import entities.BookAuthor;
 import entities.Person;
@@ -11,4 +12,5 @@ public interface BookAuthorDAO  {
     void update(BookAuthor obj);
     <T> void delete(Integer id, T obj);
     public List<Book> findBooksByAuthor(String name);
+    public List<Author> findAuthorsByBook(String name);
 }

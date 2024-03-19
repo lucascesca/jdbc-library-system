@@ -2,6 +2,7 @@ package entities.dao.impl;
 
 import db.DB;
 import db.DbException;
+import entities.Author;
 import entities.Book;
 import entities.BookAuthor;
 import entities.Publisher;
@@ -124,6 +125,38 @@ public class BookAuthorDaoJDBC implements BookAuthorDAO {
         }
     }
 
+    public List<Author> findAuthorsByBook(String name) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = conn.prepareStatement(
+                    "SELECT au.code AS author_code, author_name " +
+                            "FROM author au " +
+                            "JOIN book_author ba ON (au.code=ba.author_code) " +
+                            "JOIN book b ON (b.code=ba.book_code) " +
+                            "JOIN publisher pb ON (b.publisher_code=pb.code) " +
+                            "WHERE LOWER(b.title) LIKE LOWER(?);");
+
+            pstmt.setString(1, "%" + name + "%");
+
+            rs = pstmt.executeQuery();
+
+            List<Author> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(instantiateAuthor(rs));
+            }
+
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(pstmt);
+        }
+    }
     private Book instantiateBook(ResultSet rs) throws SQLException{
         Book obj = new Book();
 
@@ -134,5 +167,9 @@ public class BookAuthorDaoJDBC implements BookAuthorDAO {
         obj.setPublisher(new Publisher(rs.getInt("p_id"), rs.getString("p_name")));
 
         return obj;
+    }
+
+    private Author instantiateAuthor(ResultSet rs) throws SQLException {
+        return new Author(rs.getInt("author_code"), rs.getString("author_name"));
     }
 }

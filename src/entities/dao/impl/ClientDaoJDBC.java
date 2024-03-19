@@ -2,6 +2,7 @@ package entities.dao.impl;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import entities.*;
 import entities.dao.PersonDAO;
 import entities.enums.States;
@@ -89,7 +90,7 @@ public class ClientDaoJDBC implements PersonDAO {
             pstmt.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbIntegrityException("Esta ação viola a restrinção de integridade");
         }
         finally {
             DB.closeStatement(pstmt);

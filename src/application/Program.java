@@ -40,14 +40,16 @@ public class Program {
         BookAuthor ba1 = new BookAuthor(b1, a1);
         BookAuthor ba3 = new BookAuthor(b2, a1);
         BookAuthor ba2 = new BookAuthor(b3, a2);
+        BookAuthor ba4 = new BookAuthor(b1, a2);
 
         //bookDao.insert(b1);
 
         //bookAuthorDao.insert(ba1);
+        //bookAuthorDao.insert(ba4);
         //bookAuthorDao.update(ba1);
 
-        bookAuthorDao.delete(1, b1);
-        bookDao.delete(b1);
+        //bookAuthorDao.delete(1, ba4.getPk().getBook());
+        //bookDao.delete(b1);
 
 
         //authorDao.insert(a1);
@@ -62,6 +64,8 @@ public class Program {
 
         System.out.println();
         System.out.println(bookAuthorDao.findBooksByAuthor("Bram Stoker"));
+        System.out.println();
+        System.out.println(bookAuthorDao.findAuthorsByBook("Dracula"));
 
         /*
         b1.addAuthor(List.of(a1));
