@@ -17,6 +17,7 @@ public class Program {
         BookDAO bookDao = DaoFactory.createBookDaoJDBC();
         PersonDAO authorDao = DaoFactory.createAuthorDaoJDBC();
         BookAuthorDAO bookAuthorDao = DaoFactory.createBookAuthorDaoJDBC();
+        BookCopyDAO bookCopyDao = DaoFactory.createBookCopyDaoJDBC();
 
         Client c1 = new Client(1, "Lucas Cesca", "123456789-10", "12.345.678", null);
         Client c2 = new Client(2, "Marco Cesca", "372.444.160-67", "45.012.682", null);
@@ -42,6 +43,14 @@ public class Program {
         BookAuthor ba2 = new BookAuthor(b3, a2);
         BookAuthor ba4 = new BookAuthor(b1, a2);
 
+        BookCopy bc1 = new BookCopy(1, b1.getId());
+        BookCopy bc12 = new BookCopy(3, b2.getId());
+        BookCopy bc2 = new BookCopy(2, b1.getId());
+
+        //bookCopyDao.insert(bc1);
+        //bookCopyDao.update(bc1, bc12);
+        //bookCopyDao.delete(bc12);
+
         //bookDao.insert(b1);
 
         //bookAuthorDao.insert(ba1);
@@ -66,6 +75,9 @@ public class Program {
         System.out.println(bookAuthorDao.findBooksByAuthor("Bram Stoker"));
         System.out.println();
         System.out.println(bookAuthorDao.findAuthorsByBook("Dracula"));
+        System.out.println();
+        System.out.println(bookCopyDao.find(bc1));
+        System.out.println(bookCopyDao.findAllCopies(1));
 
         /*
         b1.addAuthor(List.of(a1));

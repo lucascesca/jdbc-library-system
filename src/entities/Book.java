@@ -74,10 +74,7 @@ public class Book implements Serializable {
         authors.addAll(list);
     }
 
-    public void createCopies() {
-        BookCopy copy = new BookCopy(copies.size() + 1, this);
-        copies.add(copy);
-    }
+    public void addCopy(List<BookCopy> list) { copies.addAll(list); }
 
     @Override
     public boolean equals(Object o) {
